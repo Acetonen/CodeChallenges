@@ -7,7 +7,7 @@ digits and adding the resulting numbers. For example, 56 becomes polindromic
 after one iteration: 56 + 65 = 121. If the number doesn't become palindromic
 after 30 iterations, then it is not anti-Lychen number.
 """
-
+import pdb; pdb.set_trace()
 numberRange = list(map(int, input("Input your range of numbers \
 separate by '-': ").split("-")))
 
