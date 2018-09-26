@@ -17,11 +17,9 @@ def Prime(k):
             break
     return flag
 
-for i in range(int(numberStr[0]), int(numberStr[1])+1):
+for num in range(int(numberStr[0]), int(numberStr[1])+1):
     # reverse number
-    check = ''
-    for j in range(len(str(i))):
-        check = check + (str(i)[-1-j])
+    check = str(num)[::-1]
     # compare number and reversed
-    if Prime(i) and Prime(int(check)):
-        print(f"{i} and {check} are prime numbers")
+    if Prime(num) and Prime(int(check)):
+        print(f"{num} and {check} are prime numbers")
