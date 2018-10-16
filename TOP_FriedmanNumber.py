@@ -44,6 +44,23 @@ def number_of_variations(counter, system):
         summa += system ** i * (system - 1)
     return summa
 
+def parentheses(rev_op):
+    """ Remove all "reverse operators" and put parentheses to output"""
+    global op_counter, temp_number, symb_operators
+    if rev_op in op_counter:
+        ind = op_counter.index(rev_op)
+        flag = False
+        if ((0 in op_counter[:ind]) or
+            (1 in op_counter[:ind])): flag = True
+        op_counter.remove(rev_op)
+        op_counter.insert(0, (rev_op-2))
+        temp_number.insert(0, temp_number[ind+1])
+        del temp_number[ind+2]
+        if flag:
+            temp_number[1] = '(' + str(temp_number[1])
+            temp_number[ind+1] = str(temp_number[ind+1]) + ')'
+
+
 # User input range of numbers, splitting by '-'.
 num_list = list(map(int, input("Input range (split '-'): ").split('-')))
 fried_number_collector = [] # list of founded FN
@@ -56,7 +73,7 @@ for totall in range(num_list[0], (num_list[1] + 1)):
         number = list(map(int, tup)) # creating list of int from tuplet
         # Creating counter of different possible variation of joints in number.
         # For ex.: num = 3457, joints: 3 4 5 7, 34 5 7, 3 45 7, 3 457, e.t.c
-        join_counter = list(map(lambda x: x*0, number))[:-1]
+        join_counter = [0 for x in number][:-1]
 
         # Number of variants different joints.
         join_summa = number_of_variations(join_counter, 2)
@@ -79,15 +96,14 @@ for totall in range(num_list[0], (num_list[1] + 1)):
             # Creating counter of all possible variants operators in our number
             # For ex.: number = 3 4 5 6,
             #          variants: 3+4+5+6; 3^4+5-6; e.t.c
-            op_counter = list(map(lambda x: x*0, temp_number))[:-1]
+            op_counter = [0 for x in temp_number][:-1]
 
             # Number of variants different operators combibations.
             summa = number_of_variations(op_counter, 7)
 
             # Results for every combination of operators.
             for j in range(summa + 1):
-                result = 0
-                oper_number = temp_number[:]
+                result = temp_number[0]
 
                 # Count result of current combination.
                 for i in range(len(op_counter)):
@@ -96,22 +112,21 @@ for totall in range(num_list[0], (num_list[1] + 1)):
                             operators[op_counter[i]] == 'reverse_pow'):
                             if ((4 not in op_counter[:i]) and
                                 (6 not in op_counter[:i])):
-                                result = operators[op_counter[i] - 2](
-                                                   oper_number[i+1],
-                                                   oper_number[i])
-                                oper_number[i+1] = result
+                                result = operators[op_counter[i]-2](
+                                                   temp_number[i+1],
+                                                   result)
                         else:
                             result = operators[op_counter[i]](
-                                               oper_number[i],
-                                               oper_number[i+1])
-                            oper_number[i+1] = result
-                    except:
-                        result = None
+                                               result,
+                                               temp_number[i+1])
+                    except: result = None
 
                 # If we find Friedman Number, print it.
                 if result == totall:
                     if result in fried_number_collector: break
                     print('Friedman Number: ', totall, end=' = ')
+                    parentheses(6) # remove r^ from output
+                    parentheses(5) # remove r/ from output
                     for i in range(len(temp_number)):
                         print(temp_number[i], end=' ')
                         try: print(symb_operators[op_counter[i]], end=' ')
