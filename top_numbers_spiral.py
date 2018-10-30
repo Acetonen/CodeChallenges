@@ -58,7 +58,6 @@ def choosing_direction(direction):
 def print_matrix(matrix):
     """Pretty matrix output"""
     max_number_length = len(str(NUMBER**2))
-    print(max_number_length)
     for row in matrix:
         for number in row:
             number = str(number)
