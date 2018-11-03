@@ -35,7 +35,7 @@ def make_one_routine(number):
 
 if __name__ == '__main__':
     NUMBER = input(
-        "Input number in range 101-9999\n"
+        "Input any number\n"
         "If three-digit number have repetitive digits or\n"
         "if four-digit number haven't at least two different digits,"
         "result'll be ZERO\n")
