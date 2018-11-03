@@ -17,7 +17,7 @@ result in the same number - 6174 - the so-called Kaprekar's constant.
 """
 
 
-def make_one_cycle(number):
+def make_one_routine(number):
     """
     Arrange the digits in descending and then in ascending order to get two
     four-digit numbers.
@@ -41,4 +41,4 @@ if __name__ == '__main__':
         "result'll be ZERO\n")
     KAPREKAR_CONSTANT = NUMBER
     while KAPREKAR_CONSTANT not in ['6174', '0', '495']:
-        KAPREKAR_CONSTANT = make_one_cycle(KAPREKAR_CONSTANT)
+        KAPREKAR_CONSTANT = make_one_routine(KAPREKAR_CONSTANT)
